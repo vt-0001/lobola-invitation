@@ -52,7 +52,7 @@ h2 {
 }
 
 .button {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 button {
@@ -68,10 +68,43 @@ button {
 button:hover {
     background-color: #9c833f;
 }
+
+/* Slideshow styles with fade effect */
+.slideshow {
+    margin-top: 30px;
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.slideshow img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slideshow img.active {
+    opacity: 1;
+}
 </style>
 </head>
 
 <body>
+
+<!-- Background Music -->
+<audio id="bg-music" loop>
+  <source src="lobola.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 
 <div class="container">
 
@@ -85,14 +118,29 @@ APRIL <br>
 12:00 PM
 </div>
 
-<div class="location">
-📍 Ka Xigalo Tsutsumani, ka Maluleke
+<!-- Slideshow Images -->
+<div class="slideshow">
+    <img src="rings.jpeg" alt="Rings" class="active">
+    <img src="cow.jpeg" alt="Cow">
+    <img src="part.jpeg" alt="Bride and Groom">
+    <img src="second.jpeg" alt="Image 4">
+    <img src="verse.jpeg" alt="Image 5">
+    <img src="love.jpeg" alt="Image 6">
 </div>
 
+<!-- Dynamic Location -->
+<div class="location">
+📍 <span id="dynamic-location">Ka Xigalo Tsutsumani, ka Maluleke</span>
+</div>
+
+<!-- Bride & Groom Names -->
 <div class="dress">
+Bride: <strong>XILUVA MALULEKE</strong><br>
+Groom: <strong>HASANI LICKTON MALULEKE</strong><br>
 Dress Code: <strong>Champagne & White</strong>
 </div>
 
+<!-- Confirm Attendance Button -->
 <div class="button">
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIPopk24yMU4-Ox61ZEei0mHvZsQtl51zohtkgApLwTnPbAQ/viewform?usp=dialog" target="_blank">
 <button>Confirm Attendance</button>
@@ -100,6 +148,54 @@ Dress Code: <strong>Champagne & White</strong>
 </div>
 
 </div>
+
+<script>
+// Slideshow JS with fade effect
+let slides = document.querySelectorAll('.slideshow img');
+let slideIndex = 0;
+
+function showSlides() {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[slideIndex].classList.add('active');
+    slideIndex = (slideIndex + 1) % slides.length;
+    setTimeout(showSlides, 3000); // change image every 3 seconds
+}
+
+// Dynamic Location JS
+const locations = [
+    "Ka Xigalo Tsutsumani, ka Maluleke",
+    "Part 2: WELCOMING OF BRIDE: Ka Xigalo Mahlambandlopfu, Ka Maluleke - Madhevu(same Day)"
+];
+let locIndex = 0;
+
+function rotateLocation() {
+    locIndex++;
+    if(locIndex >= locations.length) { locIndex = 0; }
+    document.getElementById('dynamic-location').textContent = locations[locIndex];
+    setTimeout(rotateLocation, 5000); // change location every 5 seconds
+}
+
+// Start the slideshow and location rotation
+showSlides();
+rotateLocation();
+
+// Background Music JS – Start at 1:41 (101 sec) and handle autoplay
+document.addEventListener("DOMContentLoaded", function() {
+    const music = document.getElementById("bg-music");
+
+    // Set start time to 1:41
+    music.currentTime = 101;
+
+    music.play().catch(() => {
+        // Autoplay blocked; play on first user interaction
+        console.log("Autoplay blocked. Click anywhere to start music from 1:41.");
+        document.body.addEventListener("click", () => {
+            music.currentTime = 101;
+            music.play();
+        }, { once: true });
+    });
+});
+</script>
 
 </body>
 </html>
