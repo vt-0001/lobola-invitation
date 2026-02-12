@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Start playback first
         music.play().then(() => {
             // Now set the time safely
-            music.currentTime = 101; // 1:41
+            music.currentTime = 0; // 1:41
         }).catch((err) => {
             console.log("Playback failed:", err);
         });
