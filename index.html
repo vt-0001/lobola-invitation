@@ -69,7 +69,7 @@ button:hover {
     background-color: #9c833f;
 }
 
-/* Slideshow styles with fade effect */
+/* Slideshow */
 .slideshow {
     margin-top: 30px;
     position: relative;
@@ -95,15 +95,25 @@ button:hover {
 .slideshow img.active {
     opacity: 1;
 }
+
+/* Map container */
+.map-container {
+    margin-top: 30px;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+    border-radius: 15px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- Background Music -->
 <audio id="bg-music" loop>
   <source src="lobola.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <div class="container">
@@ -118,29 +128,41 @@ APRIL <br>
 12:00 PM
 </div>
 
-<!-- Slideshow Images -->
 <div class="slideshow">
-    <img src="rings.jpeg" alt="Rings" class="active">
-    <img src="cow.jpeg" alt="Cow">
-    <img src="part.jpeg" alt="Bride and Groom">
-    <img src="second.jpeg" alt="Image 4">
-    <img src="verse.jpeg" alt="Image 5">
-    <img src="love.jpeg" alt="Image 6">
+    <img src="rings.jpeg" class="active">
+    <img src="cow.jpeg">
+    <img src="part.jpeg">
+    <img src="second.jpeg">
+    <img src="verse.jpeg">
+    <img src="love.jpeg">
 </div>
 
-<!-- Dynamic Location -->
 <div class="location">
 📍 <span id="dynamic-location">Ka Xigalo Tsutsumani, ka Maluleke</span>
 </div>
 
-<!-- Bride & Groom Names -->
+<!-- Embedded Google Map -->
+<div class="map-container">
+    <iframe 
+        src="https://www.google.com/maps?q=Ka%20Xigalo%20Tsutsumani,%20ka%20Maluleke&output=embed"
+        loading="lazy"
+        allowfullscreen>
+    </iframe>
+</div>
+
+<!-- Open in Google Maps Button -->
+<div class="button">
+<a href="https://maps.app.goo.gl/fMHjgofKr5ovQR858" target="_blank">
+<button>Open in Google Maps</button>
+</a>
+</div>
+
 <div class="dress">
 Bride: <strong>XILUVA MALULEKE</strong><br>
 Groom: <strong>HASANI LICKTON MALULEKE</strong><br>
 Dress Code: <strong>Champagne & White</strong>
 </div>
 
-<!-- Confirm Attendance Button -->
 <div class="button">
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIPopk24yMU4-Ox61ZEei0mHvZsQtl51zohtkgApLwTnPbAQ/viewform?usp=dialog" target="_blank">
 <button>Confirm Attendance</button>
@@ -150,7 +172,6 @@ Dress Code: <strong>Champagne & White</strong>
 </div>
 
 <script>
-// Slideshow JS with fade effect
 let slides = document.querySelectorAll('.slideshow img');
 let slideIndex = 0;
 
@@ -161,45 +182,33 @@ function showSlides() {
     setTimeout(showSlides, 3000);
 }
 
-// Dynamic Location JS
 const locations = [
     "Ka Xigalo Tsutsumani, ka Maluleke",
-    "Part 2: WELCOMING OF BRIDE: Ka Xigalo Mahlambandlopfu, Ka Maluleke - Madhevu(same Day)"
+    "Part 2: WELCOMING OF BRIDE: Ka Xigalo Mahlambandlopfu, Ka Maluleke - Madhevu (Same Day)"
 ];
+
 let locIndex = 0;
 
 function rotateLocation() {
-    locIndex++;
-    if(locIndex >= locations.length) { locIndex = 0; }
+    locIndex = (locIndex + 1) % locations.length;
     document.getElementById('dynamic-location').textContent = locations[locIndex];
     setTimeout(rotateLocation, 5000);
 }
 
-// Start slideshow and location rotation
 showSlides();
 rotateLocation();
 
-// Background Music – iOS-friendly start at 1:41
 document.addEventListener("DOMContentLoaded", function() {
     const music = document.getElementById("bg-music");
 
-    function startMusicAtTime() {
-        // Start playback first
-        music.play().then(() => {
-            // Now set the time safely
-            music.currentTime = 0; // 1:41
-        }).catch((err) => {
-            console.log("Playback failed:", err);
-        });
-
-        // Remove event listeners to avoid repeated calls
-        document.body.removeEventListener("touchstart", startMusicAtTime);
-        document.body.removeEventListener("click", startMusicAtTime);
+    function startMusic() {
+        music.play().catch(() => {});
+        document.body.removeEventListener("touchstart", startMusic);
+        document.body.removeEventListener("click", startMusic);
     }
 
-    // Wait for first user interaction (required on mobile)
-    document.body.addEventListener("touchstart", startMusicAtTime, { once: true });
-    document.body.addEventListener("click", startMusicAtTime, { once: true });
+    document.body.addEventListener("touchstart", startMusic, { once: true });
+    document.body.addEventListener("click", startMusic, { once: true });
 });
 </script>
 
