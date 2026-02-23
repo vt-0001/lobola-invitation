@@ -17,7 +17,7 @@ body {
 
 .container {
     padding: 40px 20px;
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
 }
 
@@ -29,6 +29,7 @@ h1 {
 h2 {
     font-weight: normal;
     font-style: italic;
+    margin-top: 50px;
 }
 
 .date-box {
@@ -37,17 +38,24 @@ h2 {
 }
 
 .highlight {
-    font-size: 42px;
+    font-size: 48px;
     font-weight: bold;
 }
 
+.section-divider {
+    margin: 60px auto;
+    width: 80%;
+    height: 1px;
+    background: #c5a850;
+}
+
 .location {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 18px;
 }
 
 .dress {
-    margin-top: 30px;
+    margin-top: 40px;
     font-size: 20px;
 }
 
@@ -58,11 +66,12 @@ h2 {
 button {
     background-color: #b89c4d;
     color: white;
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 14px 28px;
+    font-size: 17px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
@@ -96,9 +105,9 @@ button:hover {
     opacity: 1;
 }
 
-/* Map container */
+/* Map */
 .map-container {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .map-container iframe {
@@ -106,6 +115,13 @@ button:hover {
     height: 300px;
     border: 0;
     border-radius: 15px;
+}
+
+/* Timeline */
+.timeline {
+    margin-top: 40px;
+    font-size: 18px;
+    line-height: 1.8;
 }
 </style>
 </head>
@@ -128,6 +144,7 @@ APRIL <br>
 12:00 PM
 </div>
 
+<!-- Slideshow -->
 <div class="slideshow">
     <img src="rings.jpeg" class="active">
     <img src="cow.jpeg">
@@ -137,27 +154,24 @@ APRIL <br>
     <img src="love.jpeg">
 </div>
 
+<div class="section-divider"></div>
+
+<!-- Timeline -->
+<h2>Event Program</h2>
+<div class="timeline">
+12:00 PM – Lobola Ceremony<br>
+After Ceremony – Welcoming of the Bride
+</div>
+
+<div class="section-divider"></div>
+
+<!-- FIRST LOCATION -->
+<h2>Main Lobola Celebration</h2>
+
 <div class="location">
-📍 <span id="dynamic-location">Ka Xigalo Tsutsumani, ka Maluleke</span>
+📍 Ka Xigalo Tsutsumani, ka Maluleke
 </div>
 
-
-
-<div class="dress">
-Bride: <strong>XILUVA MALULEKE</strong><br>
-Groom: <strong>HASANI LICKTON MALULEKE</strong><br>
-Dress Code: <strong>Champagne & White</strong>
-</div>
-
-<div class="button">
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSdIPopk24yMU4-Ox61ZEei0mHvZsQtl51zohtkgApLwTnPbAQ/viewform?usp=dialog" target="_blank">
-<button>Confirm Attendance</button>
-</a>
-</div>
-
-</div>
-
-<!-- Embedded Google Map -->
 <div class="map-container">
     <iframe 
         src="https://www.google.com/maps?q=Ka%20Xigalo%20Tsutsumani,%20ka%20Maluleke&output=embed"
@@ -166,14 +180,55 @@ Dress Code: <strong>Champagne & White</strong>
     </iframe>
 </div>
 
-<!-- Open in Google Maps Button -->
 <div class="button">
 <a href="https://maps.app.goo.gl/fMHjgofKr5ovQR858" target="_blank">
-<button>Open in Google Maps</button>
+<button>Open Main Location in Maps</button>
 </a>
 </div>
 
+<div class="section-divider"></div>
+
+<!-- SECOND LOCATION -->
+<h2>Welcoming of the Bride</h2>
+
+<div class="location">
+📍 Ka Xigalo Mahlambandlopfu, Ka Maluleke - Madhevu
+</div>
+
+<div class="map-container">
+    <iframe 
+        src="https://www.google.com/maps?q=Ka%20Xigalo%20Mahlambandlopfu,%20Ka%20Maluleke%20Madhevu&output=embed"
+        loading="lazy"
+        allowfullscreen>
+    </iframe>
+</div>
+
+<div class="button">
+<a href="https://maps.app.goo.gl/L81MNKBCU4fByZbX8" target="_blank">
+<button>Open Second Location in Maps</button>
+</a>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- Bride & Groom -->
+<div class="dress">
+Bride: <strong>XILUVA MALULEKE</strong><br>
+Groom: <strong>HASANI LICKTON MALULEKE</strong><br>
+Dress Code: <strong>Champagne & White</strong>
+</div>
+
+<!-- RSVP -->
+<div class="button">
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSdIPopk24yMU4-Ox61ZEei0mHvZsQtl51zohtkgApLwTnPbAQ/viewform?usp=dialog" target="_blank">
+<button>Confirm Attendance</button>
+</a>
+</div>
+
+</div>
+
 <script>
+// Slideshow
 let slides = document.querySelectorAll('.slideshow img');
 let slideIndex = 0;
 
@@ -184,22 +239,9 @@ function showSlides() {
     setTimeout(showSlides, 3000);
 }
 
-const locations = [
-    "Ka Xigalo Tsutsumani, ka Maluleke",
-    "Part 2: WELCOMING OF BRIDE: Ka Xigalo Mahlambandlopfu, Ka Maluleke - Madhevu (Same Day)"
-];
-
-let locIndex = 0;
-
-function rotateLocation() {
-    locIndex = (locIndex + 1) % locations.length;
-    document.getElementById('dynamic-location').textContent = locations[locIndex];
-    setTimeout(rotateLocation, 5000);
-}
-
 showSlides();
-rotateLocation();
 
+// Music start on interaction (mobile friendly)
 document.addEventListener("DOMContentLoaded", function() {
     const music = document.getElementById("bg-music");
 
